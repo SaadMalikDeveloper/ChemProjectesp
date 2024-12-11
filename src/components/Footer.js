@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import FailComponent from "./FailComponent";
 import GiveupComponent from "./GiveupComponent";
+import GiveupTryAgain from "./GiveupTryAgain";
 
 const Footer = ({
   currentStep,
@@ -17,6 +18,7 @@ const Footer = ({
   const [gameReset, setGameReset] = useState(false);
   const [showText, setShowText] = useState(true);
   const [isFirstClick, setIsFirstClick] = useState(true);
+  const [isFirstClickPopup, setIsFirstClickPopup] = useState(true);
 
   const handleNext = () => {
     if (currentStep < totalSteps) {
@@ -113,10 +115,8 @@ const Footer = ({
       if (isFirstClick) {
         sessionStorage.setItem("hasClickedAbandon", "true");
         setIsFirstClick(false);
-        setTimeout(() => {
-          window.location.reload();
-        }, 2500);
       } else {
+        setIsFirstClickPopup(false);
         setTimeout(() => {
           window.location.href = redirectBack;
         }, 5000);
@@ -130,12 +130,7 @@ const Footer = ({
     setHelpPop(true);
     setGameGlobalReset(false);
   };
-  useEffect(() => {
-    const clickedBefore = sessionStorage.getItem("hasClickedAbandon");
-    if (clickedBefore) {
-      setIsFirstClick(false);
-    }
-  }, []);
+
   return (
     <footer>
       <div className="left__footer_col">
@@ -178,15 +173,28 @@ const Footer = ({
             <div className="loaderBg">
               {/* <img src={`${process.env.PUBLIC_URL}/assets/loader.svg`} alt="" /> */}
             </div>
-            <GiveupComponent
-              setGameResetGiveup={setGameResetGiveup}
-              gameResetGiveup={gameResetGiveup}
-              setGameReset={setGameReset}
-              setShowText={setShowText}
-              showText={showText}
-              setGameGlobalReset={setGameGlobalReset}
-              gameGlobalReset={gameGlobalReset}
-            />
+
+            {isFirstClickPopup ? (
+              <GiveupTryAgain
+                setGameResetGiveup={setGameResetGiveup}
+                gameResetGiveup={gameResetGiveup}
+                setGameReset={setGameReset}
+                setShowText={setShowText}
+                showText={showText}
+                setGameGlobalReset={setGameGlobalReset}
+                gameGlobalReset={gameGlobalReset}
+              />
+            ) : (
+              <GiveupComponent
+                setGameResetGiveup={setGameResetGiveup}
+                gameResetGiveup={gameResetGiveup}
+                setGameReset={setGameReset}
+                setShowText={setShowText}
+                showText={showText}
+                setGameGlobalReset={setGameGlobalReset}
+                gameGlobalReset={gameGlobalReset}
+              />
+            )}
           </>
         )}
       </div>
