@@ -26,9 +26,9 @@ const GiveupComponent = ({
         <div className="cong__modal_wrap fail_comp_main_wrap">
           <div className="cong__modal_inner_container">
             <img src={`${process.env.PUBLIC_URL}/assets/caution.png`} alt="" />
-            <h2>Give Up</h2>
-            <h5>Your participation is appriciation for us...</h5>
-            <p>GoodLuck!</p>
+            <h2>¡¿Abandonar?!</h2>
+            <h5>¡Puedes hacer esto! Inténtalo una vez más, por favor.</h5>
+            <p>Agradecemos el esfuerzo</p>
             {/* <div className="button__row_col">
               <button className="tgiveup__btn" onClick={handleRefresh}>
                 Give Up
